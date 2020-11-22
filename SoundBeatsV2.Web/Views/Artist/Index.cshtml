@@ -1,0 +1,67 @@
+﻿@model IEnumerable<SoundBeatsV2.Core.Domain.Artist>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var flag = string.Empty;
+    var flag2x = string.Empty;
+    var flag3x = string.Empty;
+}
+
+<h1 class="text-center">Catálogo de artistas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success"><i class="fas fa-user-plus"></i>&nbsp; Agregar nuevo artista</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            flag = "https://flagcdn.com/h24/" + item.Country.ISO2.ToLower() + ".png";
+            flag2x = "https://flagcdn.com/h48/" + item.Country.ISO2.ToLower() + ".png";
+            flag3x = "https://flagcdn.com/96x72/" + item.Country.ISO2.ToLower() + ".png";
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Biography)
+                </td>
+                <td>
+                   @* @Html.DisplayFor(modelItem => item.Country.NameEs)*@
+                    <img src=@flag srcset="@flag2x 2x"
+                         height="24"
+                         alt="@item.Country.NameEn"
+                         data-toggle="tooltip" data-placement="top" title="@item.Country.NameEs">
+                </td>
+                <td>
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"
+                           data-toggle="tooltip" data-placement="top" title="Edición de artista"><i class="fas fa-edit"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"
+                           data-toggle="tooltip" data-placement="top" title="Detalles de artista"><i class="fas fa-users"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
+                           data-toggle="tooltip" data-placement="top" title="Borrar artista"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
