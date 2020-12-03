@@ -25,16 +25,26 @@ namespace SoundBeatsV2.Web
             services.AddDbContext<SoundBeatsDbContext>(options =>
                 options.UseMySQL(
                     Configuration.GetConnectionString("SoundBeatsConnection")));
+
             services.AddDbContext<AppIdentityDbContext>(options =>
                  options.UseMySQL(
                      Configuration.GetConnectionString("IdentityContextConnection")));
 
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<AppIdentityDbContext>();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
+
+            //services.AddIdentity<SoundBeatsUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<AppIdentityDbContext>()
+            //    .AddDefaultTokenProviders();
+
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-           services.AddRazorPages();
+            services.AddMvc();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +74,7 @@ namespace SoundBeatsV2.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }

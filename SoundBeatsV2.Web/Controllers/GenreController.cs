@@ -10,23 +10,22 @@ using SoundBeatsV2.Infrastructure.Data;
 
 namespace SoundBeatsV2.Web.Controllers
 {
-    public class ArtistController : Controller
+    public class GenreController : Controller
     {
         private readonly SoundBeatsDbContext _context;
 
-        public ArtistController(SoundBeatsDbContext context)
+        public GenreController(SoundBeatsDbContext context)
         {
             _context = context;
         }
 
-        // GET: Artist
+        // GET: Genre
         public async Task<IActionResult> Index()
         {
-            var soundBeatsDbContext = _context.Artist.Include(a => a.Country);
-            return View(await soundBeatsDbContext.ToListAsync());
+            return View(await _context.Genre.ToListAsync());
         }
 
-        // GET: Artist/Details/5
+        // GET: Genre/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,54 +33,39 @@ namespace SoundBeatsV2.Web.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist
-                .Include(a => a.Country)
+            var genre = await _context.Genre
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (artist == null)
+            if (genre == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(genre);
         }
 
-        // GET: Artist/Create
+        // GET: Genre/Create
         public IActionResult Create()
         {
-            List<CountryDTO> listCompuesta = new List<CountryDTO>();
-            var originalList = _context.Country.ToList();
-            foreach (var item in originalList)
-            {
-                listCompuesta.Add(new CountryDTO
-                {
-                    Id = item.Id,
-                    CompoundName = item.ISO2 + "-" + item.NameEs
-                });
-            }
-
-
-            ViewData["CountryId"] = new SelectList(originalList, "Id", "NameEs");
             return View();
         }
 
-        // POST: Artist/Create
+        // POST: Genre/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Biography,CountryId")] Artist artist)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Genre genre)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(artist);
+                _context.Add(genre);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "NameEs", artist.CountryId);
-            return View(artist);
+            return View(genre);
         }
 
-        // GET: Artist/Edit/5
+        // GET: Genre/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,23 +73,22 @@ namespace SoundBeatsV2.Web.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist.FindAsync(id);
-            if (artist == null)
+            var genre = await _context.Genre.FindAsync(id);
+            if (genre == null)
             {
                 return NotFound();
             }
-            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "NameEs", artist.CountryId);
-            return View(artist);
+            return View(genre);
         }
 
-        // POST: Artist/Edit/5
+        // POST: Genre/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Biography,CountryId")] Artist artist)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
-            if (id != artist.Id)
+            if (id != genre.Id)
             {
                 return NotFound();
             }
@@ -114,12 +97,12 @@ namespace SoundBeatsV2.Web.Controllers
             {
                 try
                 {
-                    _context.Update(artist);
+                    _context.Update(genre);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArtistExists(artist.Id))
+                    if (!GenreExists(genre.Id))
                     {
                         return NotFound();
                     }
@@ -130,11 +113,10 @@ namespace SoundBeatsV2.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "NameEs", artist.CountryId);
-            return View(artist);
+            return View(genre);
         }
 
-        // GET: Artist/Delete/5
+        // GET: Genre/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,31 +124,30 @@ namespace SoundBeatsV2.Web.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist
-                .Include(a => a.Country)
+            var genre = await _context.Genre
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (artist == null)
+            if (genre == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(genre);
         }
 
-        // POST: Artist/Delete/5
+        // POST: Genre/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var artist = await _context.Artist.FindAsync(id);
-            _context.Artist.Remove(artist);
+            var genre = await _context.Genre.FindAsync(id);
+            _context.Genre.Remove(genre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArtistExists(int id)
+        private bool GenreExists(int id)
         {
-            return _context.Artist.Any(e => e.Id == id);
+            return _context.Genre.Any(e => e.Id == id);
         }
     }
 }

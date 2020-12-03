@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -33,6 +33,10 @@
   <ItemGroup>
     <ProjectReference Include="..\SoundBeatsV2.Core\SoundBeatsV2.Core.csproj" />
     <ProjectReference Include="..\SoundBeatsV2.Infrastructure\SoundBeatsV2.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>

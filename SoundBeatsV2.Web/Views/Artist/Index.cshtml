@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SoundBeatsV2.Core.Domain.Artist>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de Artistas";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var flag = string.Empty;
     var flag2x = string.Empty;
@@ -11,7 +11,7 @@
 <h1 class="text-center">Catálogo de artistas</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-success"><i class="fas fa-user-plus"></i>&nbsp; Agregar nuevo artista</a>
+    <a asp-action="Create" class="btn btn-info"><i class="fas fa-user-plus"></i>&nbsp; Agregar nuevo artista</a>
 </p>
 <table class="table">
     <thead>

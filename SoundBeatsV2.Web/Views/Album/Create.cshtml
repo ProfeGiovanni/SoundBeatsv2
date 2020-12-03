@@ -5,47 +5,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+@section StyleAlbum{
+    <link href="~/lib/fileupload-preview/file-upload-with-preview.min.css" rel="stylesheet" />
+}
+@section ScriptAlbum{ 
+    <script src="~/lib/fileupload-preview/file-upload-with-preview.js"></script>
+    <script src="~/js/_uploadAlbumImg.js"></script>
+}
 
-<h4>Album</h4>
+<h2>Creación de Álbum</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ArtistId" class="control-label"></label>
+                <select asp-for="ArtistId" class="form-control" asp-items="ViewBag.ArtistId"></select>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="PhotoCover" class="control-label"></label>
+
+                @*<input asp-for="PhotoCover" type="file" class="form-control" />*@
+                <div class="media align-items-center">
+                    <div class="custom-file-container" data-upload-id="profileImage">
+                        <!-- Image -->
+                        <div class="media-left mr-16pt custom-file-container__image-preview"></div>
+                        <!-- input type file -->
+                        <div class="media-body">
+                            <label class="custom-file-container__custom-file ">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                                @Html.TextBoxFor(model => model.PhotoCover, new
+                                {
+                                    type = "file",
+                                    @class = "custom-file-container__custom-file__custom-file-input ",
+                                    @accept = "image/*"
+                                })
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            </label>
+                            <label>
+                                <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Borrar imagen"><i class="far fa-trash-alt fa-2x"></i></a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <span asp-validation-for="PhotoCover" class="text-danger"></span>
+            </div>
+
+
             <div class="form-group">
                 <label asp-for="Year" class="control-label"></label>
                 <input asp-for="Year" class="form-control" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="PhotoCover" class="control-label"></label>
-                <input asp-for="PhotoCover" class="form-control" />
-                <span asp-validation-for="PhotoCover" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageType" class="control-label"></label>
-                <input asp-for="ImageType" class="form-control" />
-                <span asp-validation-for="ImageType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ArtistId" class="control-label"></label>
-                <select asp-for="ArtistId" class ="form-control" asp-items="ViewBag.ArtistId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar a listado</a>
 </div>
 
 @section Scripts {

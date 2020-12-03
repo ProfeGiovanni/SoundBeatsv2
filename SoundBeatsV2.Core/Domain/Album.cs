@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoundBeatsV2.Core.Domain
 {
-    [Table("Albums")]
+    [Table("Album")]
     public class Album
     {
         public int Id { get; set; }

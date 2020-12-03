@@ -20,9 +20,9 @@ namespace SoundBeatsV2.Core.Domain
         public int CountryId { get; set; }
 
         [Display(Name = "País de origen")]
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
 
-        public ICollection<Album> Album { get; set;  }
+        public ICollection<Album> Albums { get; set;  }
     }
 }

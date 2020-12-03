@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoundBeatsV2.Core.Domain
@@ -28,6 +29,6 @@ namespace SoundBeatsV2.Core.Domain
         [Display(Name = "Código ISO3")]
         public string ISO3 { get; set; }
 
-        public Artist Artist { get; set; }
+        public ICollection<Artist> Artist { get; set; }
     }
 }

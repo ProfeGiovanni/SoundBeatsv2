@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SoundBeatsV2.Infrastructure.Identity
 {
-    public class AppIdentityDbContext : IdentityDbContext
+    public class AppIdentityDbContext : IdentityDbContext//<SoundBeatsUser>
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)

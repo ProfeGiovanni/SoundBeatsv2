@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoundBeatsV2.Core.Domain
 {
+    [Table("Musician")]
     public class Musician
     {
         public int Id { get; set; }

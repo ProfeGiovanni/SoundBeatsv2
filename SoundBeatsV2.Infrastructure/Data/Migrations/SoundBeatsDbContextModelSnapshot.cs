@@ -42,7 +42,7 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Albums");
+                    b.ToTable("Album");
                 });
 
             modelBuilder.Entity("SoundBeatsV2.Core.Domain.Artist", b =>
@@ -63,8 +63,7 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId")
-                        .IsUnique();
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Artist");
                 });
@@ -2135,6 +2134,25 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
                     b.ToTable("Musician");
                 });
 
+            modelBuilder.Entity("SoundBeatsV2.Core.Domain.ReviewerProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("varchar(80)")
+                        .HasMaxLength(80);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReviewerProfile");
+                });
+
             modelBuilder.Entity("SoundBeatsV2.Core.Domain.Song", b =>
                 {
                     b.Property<int>("Id")
@@ -2161,16 +2179,43 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
 
                     b.HasIndex("AlbumId");
 
-                    b.HasIndex("GenreId")
-                        .IsUnique();
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Song");
+                });
+
+            modelBuilder.Entity("SoundBeatsV2.Core.Domain.SongReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("varchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("Ranking")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewerProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewerProfileId");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("SongReview");
                 });
 
             modelBuilder.Entity("SoundBeatsV2.Core.Domain.Album", b =>
                 {
                     b.HasOne("SoundBeatsV2.Core.Domain.Artist", "Artist")
-                        .WithMany("Album")
+                        .WithMany("Albums")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2179,8 +2224,8 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
             modelBuilder.Entity("SoundBeatsV2.Core.Domain.Artist", b =>
                 {
                     b.HasOne("SoundBeatsV2.Core.Domain.Country", "Country")
-                        .WithOne("Artist")
-                        .HasForeignKey("SoundBeatsV2.Core.Domain.Artist", "CountryId")
+                        .WithMany("Artist")
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2209,8 +2254,23 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("SoundBeatsV2.Core.Domain.Genre", "Genre")
-                        .WithOne("Song")
-                        .HasForeignKey("SoundBeatsV2.Core.Domain.Song", "GenreId")
+                        .WithMany("Songs")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SoundBeatsV2.Core.Domain.SongReview", b =>
+                {
+                    b.HasOne("SoundBeatsV2.Core.Domain.ReviewerProfile", "Artist")
+                        .WithMany("SongReviews")
+                        .HasForeignKey("ReviewerProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoundBeatsV2.Core.Domain.Song", "Song")
+                        .WithMany("SongReviews")
+                        .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
