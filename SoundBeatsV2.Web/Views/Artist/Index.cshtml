@@ -19,13 +19,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Biography)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Biography)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Country)
             </th>
             <th></th>
+            <th>Álbumes</th>
+
         </tr>
     </thead>
     <tbody>
@@ -39,11 +41,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Biography)
+                    </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.Biography)
-                </td>
-                <td>
-                   @* @Html.DisplayFor(modelItem => item.Country.NameEs)*@
+                    @* @Html.DisplayFor(modelItem => item.Country.NameEs)*@
                     <img src=@flag srcset="@flag2x 2x"
                          height="24"
                          alt="@item.Country.NameEn"
@@ -59,6 +61,12 @@
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
                            data-toggle="tooltip" data-placement="top" title="Borrar artista"><i class="fas fa-trash-alt"></i></a>
                     </div>
+
+                </td>
+
+                <td>
+                    <a asp-action="ByArtist" asp-controller="Album" asp-route-id="@item.Id" class="btn btn-warning"
+                       data-toggle="tooltip" data-placement="top" title="Listado de álbumes de @item.Name"><i class="fas fa-edit"></i></a>
 
                 </td>
             </tr>

@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundBeatsV2.Core", "SoundBeatsV2.Core\SoundBeatsV2.Core.csproj", "{BB96D96A-4B85-4A96-A1C8-DC4D40043E97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundBeatsV2.Core", "SoundBeatsV2.Core\SoundBeatsV2.Core.csproj", "{BB96D96A-4B85-4A96-A1C8-DC4D40043E97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundBeatsV2.Infrastructure", "SoundBeatsV2.Infrastructure\SoundBeatsV2.Infrastructure.csproj", "{3B921316-65B0-4648-A243-899A7F1DAC74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundBeatsV2.Infrastructure", "SoundBeatsV2.Infrastructure\SoundBeatsV2.Infrastructure.csproj", "{3B921316-65B0-4648-A243-899A7F1DAC74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundBeatsV2.Web", "SoundBeatsV2.Web\SoundBeatsV2.Web.csproj", "{18E2D61C-9A8E-4FBB-BD7D-25F09B8B2A37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundBeatsV2.Web", "SoundBeatsV2.Web\SoundBeatsV2.Web.csproj", "{18E2D61C-9A8E-4FBB-BD7D-25F09B8B2A37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Presentación", "01.Presentación", "{031422D1-F056-40C6-BD5D-FB3BBEE53FD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.Infrastructure", "02.Infrastructure", "{19B4F8CC-CF0B-49FF-976A-20D4AF56AB6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.Core", "03.Core", "{397E98DE-CEC3-46CD-A2FE-8BED16A325CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BB96D96A-4B85-4A96-A1C8-DC4D40043E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -58,5 +61,16 @@ Global
 		{18E2D61C-9A8E-4FBB-BD7D-25F09B8B2A37}.Release|x64.Build.0 = Release|Any CPU
 		{18E2D61C-9A8E-4FBB-BD7D-25F09B8B2A37}.Release|x86.ActiveCfg = Release|Any CPU
 		{18E2D61C-9A8E-4FBB-BD7D-25F09B8B2A37}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB96D96A-4B85-4A96-A1C8-DC4D40043E97} = {397E98DE-CEC3-46CD-A2FE-8BED16A325CF}
+		{3B921316-65B0-4648-A243-899A7F1DAC74} = {19B4F8CC-CF0B-49FF-976A-20D4AF56AB6A}
+		{18E2D61C-9A8E-4FBB-BD7D-25F09B8B2A37} = {031422D1-F056-40C6-BD5D-FB3BBEE53FD4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8C1FE38-4C01-456B-ABDD-68C42A6E523C}
 	EndGlobalSection
 EndGlobal

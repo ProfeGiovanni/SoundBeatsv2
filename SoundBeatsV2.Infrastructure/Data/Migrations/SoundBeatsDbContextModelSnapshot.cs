@@ -42,7 +42,7 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Album");
+                    b.ToTable("Albums");
                 });
 
             modelBuilder.Entity("SoundBeatsV2.Core.Domain.Artist", b =>

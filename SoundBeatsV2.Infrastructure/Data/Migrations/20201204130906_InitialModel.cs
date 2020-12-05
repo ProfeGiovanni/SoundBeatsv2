@@ -56,6 +56,20 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ReviewerProfile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(maxLength: 80, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReviewerProfile", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Artist",
                 columns: table => new
                 {
@@ -153,6 +167,34 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
                         name: "FK_Song_Genre_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genre",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SongReview",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Ranking = table.Column<int>(nullable: false),
+                    Comment = table.Column<string>(maxLength: 500, nullable: true),
+                    SongId = table.Column<int>(nullable: false),
+                    ReviewerProfileId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SongReview", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SongReview_ReviewerProfile_ReviewerProfileId",
+                        column: x => x.ReviewerProfileId,
+                        principalTable: "ReviewerProfile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SongReview_Song_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Song",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -417,8 +459,7 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Artist_CountryId",
                 table: "Artist",
-                column: "CountryId",
-                unique: true);
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupMember_ArtistId",
@@ -438,8 +479,17 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Song_GenreId",
                 table: "Song",
-                column: "GenreId",
-                unique: true);
+                column: "GenreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SongReview_ReviewerProfileId",
+                table: "SongReview",
+                column: "ReviewerProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SongReview_SongId",
+                table: "SongReview",
+                column: "SongId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -448,10 +498,16 @@ namespace SoundBeatsV2.Infrastructure.Data.Migrations
                 name: "GroupMember");
 
             migrationBuilder.DropTable(
-                name: "Song");
+                name: "SongReview");
 
             migrationBuilder.DropTable(
                 name: "Musician");
+
+            migrationBuilder.DropTable(
+                name: "ReviewerProfile");
+
+            migrationBuilder.DropTable(
+                name: "Song");
 
             migrationBuilder.DropTable(
                 name: "Albums");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,19 @@ namespace SoundBeatsV2.Web.Controllers
             return View(await soundBeatsDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> ByArtist(int id)
+        {
+            var soundBeatsDbContext = _context.Album.Where(x => x.ArtistId == id);
+            var listAlbum = await soundBeatsDbContext.ToListAsync();
+
+            ViewData["ArtistName"] = _context.Artist.Where(x => x.Id == id).FirstOrDefault().Name;
+            ViewData["ArtistBiography"] = _context.Artist.Where(x => x.Id == id).FirstOrDefault().Biography;
+
+            return View(listAlbum);
+        }
+
+
+
         // GET: Album/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,6 +59,8 @@ namespace SoundBeatsV2.Web.Controllers
             return View(album);
         }
 
+
+        [Authorize(Roles = "Administrator")]
         // GET: Album/Create
         public IActionResult Create()
         {

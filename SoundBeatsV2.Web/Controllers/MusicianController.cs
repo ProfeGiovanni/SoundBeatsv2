@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +10,22 @@ using SoundBeatsV2.Infrastructure.Data;
 
 namespace SoundBeatsV2.Web.Controllers
 {
-    public class ArtistController : Controller
+    public class MusicianController : Controller
     {
         private readonly SoundBeatsDbContext _context;
 
-        public ArtistController(SoundBeatsDbContext context)
+        public MusicianController(SoundBeatsDbContext context)
         {
             _context = context;
         }
 
-        // GET: Artist
+        // GET: Musician
         public async Task<IActionResult> Index()
         {
-            var soundBeatsDbContext = _context.Artist.Include(a => a.Country);
-            return View(await soundBeatsDbContext.ToListAsync());
+            return View(await _context.Musician.ToListAsync());
         }
 
-        // GET: Artist/Details/5
+        // GET: Musician/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,56 +33,39 @@ namespace SoundBeatsV2.Web.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist
-                .Include(a => a.Country)
+            var musician = await _context.Musician
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (artist == null)
+            if (musician == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(musician);
         }
 
-
-        [Authorize(Roles = "Administrator")]
-        // GET: Artist/Create
+        // GET: Musician/Create
         public IActionResult Create()
         {
-            List<CountryDTO> listCompuesta = new List<CountryDTO>();
-            var originalList = _context.Country.ToList();
-            foreach (var item in originalList)
-            {
-                listCompuesta.Add(new CountryDTO
-                {
-                    Id = item.Id,
-                    CompoundName = item.ISO2 + "-" + item.NameEs
-                });
-            }
-
-
-            ViewData["CountryId"] = new SelectList(originalList, "Id", "NameEs");
             return View();
         }
 
-        // POST: Artist/Create
+        // POST: Musician/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Biography,CountryId")] Artist artist)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,BirthPlace,Photo,ImageType")] Musician musician)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(artist);
+                _context.Add(musician);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "NameEs", artist.CountryId);
-            return View(artist);
+            return View(musician);
         }
 
-        // GET: Artist/Edit/5
+        // GET: Musician/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,23 +73,22 @@ namespace SoundBeatsV2.Web.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist.FindAsync(id);
-            if (artist == null)
+            var musician = await _context.Musician.FindAsync(id);
+            if (musician == null)
             {
                 return NotFound();
             }
-            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "NameEs", artist.CountryId);
-            return View(artist);
+            return View(musician);
         }
 
-        // POST: Artist/Edit/5
+        // POST: Musician/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Biography,CountryId")] Artist artist)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,BirthDate,BirthPlace,Photo,ImageType")] Musician musician)
         {
-            if (id != artist.Id)
+            if (id != musician.Id)
             {
                 return NotFound();
             }
@@ -117,12 +97,12 @@ namespace SoundBeatsV2.Web.Controllers
             {
                 try
                 {
-                    _context.Update(artist);
+                    _context.Update(musician);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArtistExists(artist.Id))
+                    if (!MusicianExists(musician.Id))
                     {
                         return NotFound();
                     }
@@ -133,11 +113,10 @@ namespace SoundBeatsV2.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "NameEs", artist.CountryId);
-            return View(artist);
+            return View(musician);
         }
 
-        // GET: Artist/Delete/5
+        // GET: Musician/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,31 +124,30 @@ namespace SoundBeatsV2.Web.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artist
-                .Include(a => a.Country)
+            var musician = await _context.Musician
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (artist == null)
+            if (musician == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(musician);
         }
 
-        // POST: Artist/Delete/5
+        // POST: Musician/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var artist = await _context.Artist.FindAsync(id);
-            _context.Artist.Remove(artist);
+            var musician = await _context.Musician.FindAsync(id);
+            _context.Musician.Remove(musician);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArtistExists(int id)
+        private bool MusicianExists(int id)
         {
-            return _context.Artist.Any(e => e.Id == id);
+            return _context.Musician.Any(e => e.Id == id);
         }
     }
 }
