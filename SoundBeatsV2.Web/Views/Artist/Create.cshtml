@@ -2,7 +2,16 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section StyleArtist{
+    <link href="~/lib/bootstrap-validator/bootstrapValidator.css" rel="stylesheet" />
+}
+
+@section ScriptArtist{
+    <script src="~/lib/bootstrap-validator/bootstrapValidator.js"></script>
+    <script src="~/js/validacionFormArtist.js"></script>
 }
 
 <h1>Create</h1>
@@ -11,7 +20,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="createArtistForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -25,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CountryId" class="control-label"></label>
-                <select asp-for="CountryId" class ="form-control" asp-items="ViewBag.CountryId"></select>
+                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

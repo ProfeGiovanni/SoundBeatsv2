@@ -25,9 +25,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Country)
             </th>
-            <th></th>
             <th>Álbumes</th>
-
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -51,24 +50,27 @@
                          alt="@item.Country.NameEn"
                          data-toggle="tooltip" data-placement="top" title="@item.Country.NameEs">
                 </td>
+
+                <td>
+                    <a asp-action="ByArtist" asp-controller="Album" asp-route-id="@item.Id" class="btn btn-info"
+                       data-toggle="tooltip" data-placement="top" title="Listado de álbumes de @item.Name"><i class="fas fa-compact-disc"></i></a>
+
+                </td>
+
                 <td>
 
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"
-                           data-toggle="tooltip" data-placement="top" title="Edición de artista"><i class="fas fa-edit"></i></a>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"
                            data-toggle="tooltip" data-placement="top" title="Detalles de artista"><i class="fas fa-users"></i></a>
+
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"
+                           data-toggle="tooltip" data-placement="top" title="Edición de artista"><i class="fas fa-edit"></i></a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
                            data-toggle="tooltip" data-placement="top" title="Borrar artista"><i class="fas fa-trash-alt"></i></a>
                     </div>
 
                 </td>
 
-                <td>
-                    <a asp-action="ByArtist" asp-controller="Album" asp-route-id="@item.Id" class="btn btn-warning"
-                       data-toggle="tooltip" data-placement="top" title="Listado de álbumes de @item.Name"><i class="fas fa-edit"></i></a>
-
-                </td>
             </tr>
         }
     </tbody>

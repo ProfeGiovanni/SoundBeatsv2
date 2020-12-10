@@ -47,7 +47,7 @@ namespace SoundBeatsV2.Web.Controllers
         }
 
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         // GET: Artist/Create
         public IActionResult Create()
         {

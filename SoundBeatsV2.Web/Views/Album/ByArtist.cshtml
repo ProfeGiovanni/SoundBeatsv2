@@ -12,7 +12,7 @@
 <hr />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-info"><i class="fas fa-compact-disc"></i>&nbsp; Nuevo album</a>
 </p>
 <table class="table">
     <thead>
@@ -26,10 +26,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhotoCover)
             </th>
+            <th>Canciones</th>
             
-            <th>
-                @Html.DisplayNameFor(model => model.Artist)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,14 +43,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhotoCover)
             </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info"><i class="fas fa-headphones"></i>&nbsp; Detalles</a>
+            </td>
             
             <td>
-                @Html.DisplayFor(modelItem => item.Artist.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"
+                       data-toggle="tooltip" data-placement="top" title="Edición de Álbum"><i class="fas fa-edit"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
+                       data-toggle="tooltip" data-placement="top" title="Borrar Álbum"><i class="fas fa-trash-alt"></i></a>
+                </div>
             </td>
         </tr>
 }

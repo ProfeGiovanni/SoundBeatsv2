@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +45,8 @@ namespace SoundBeatsV2.Web.Controllers
         // GET: Album/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // Se modifica los detalles de ALbum para mostrar el listado de canciones
+
             if (id == null)
             {
                 return NotFound();
@@ -60,7 +64,7 @@ namespace SoundBeatsV2.Web.Controllers
         }
 
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         // GET: Album/Create
         public IActionResult Create()
         {
@@ -73,10 +77,31 @@ namespace SoundBeatsV2.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Year,PhotoCover,ImageType,ArtistId")] Album album)
+        public async Task<IActionResult> Create([Bind("Id,Title,Year,PhotoCover,ImageType,ArtistId")] Album album, 
+            List<IFormFile> Image)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            if (ModelState.IsValid && Image != null)
             {
+                // full path to file in temp location
+                var filePath = Path.GetTempFileName();
+                foreach (var formFile in Image)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+                    }
+                }
+
+
+                //album.PhotoCover = new byte[Image.ContentLength];
+                //album.ImageType = Image.ContentType;
+                //Image.InputStream.Read(album.PhotoCover, 0, Image.ContentLength);
+
+
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
