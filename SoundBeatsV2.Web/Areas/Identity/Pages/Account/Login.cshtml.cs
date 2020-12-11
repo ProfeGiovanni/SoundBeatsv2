@@ -87,7 +87,8 @@ namespace SoundBeatsV2.Web.Areas.Identity.Pages.Account
 
                     // Revisión de tipo de Rol para redirección:
 
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect("/Artist/Index");
+                    //return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

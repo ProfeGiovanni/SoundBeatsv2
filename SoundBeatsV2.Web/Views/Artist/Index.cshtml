@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Listado de Artistas";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var flag = string.Empty;
     var flag2x = string.Empty;
     var flag3x = string.Empty;
@@ -10,68 +11,87 @@
 
 <h1 class="text-center">Catálogo de artistas</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-info"><i class="fas fa-user-plus"></i>&nbsp; Agregar nuevo artista</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Biography)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Country)
-            </th>
-            <th>Álbumes</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            flag = "https://flagcdn.com/h24/" + item.Country.ISO2.ToLower() + ".png";
-            flag2x = "https://flagcdn.com/h48/" + item.Country.ISO2.ToLower() + ".png";
-            flag3x = "https://flagcdn.com/96x72/" + item.Country.ISO2.ToLower() + ".png";
+<!-- Content Row -->
+<div class="row">
+    <!-- Card Example -->
+    <div class="col-md-12 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Biography)
-                    </td>*@
-                <td>
-                    @* @Html.DisplayFor(modelItem => item.Country.NameEs)*@
-                    <img src=@flag srcset="@flag2x 2x"
-                         height="24"
-                         alt="@item.Country.NameEn"
-                         data-toggle="tooltip" data-placement="top" title="@item.Country.NameEs">
-                </td>
 
-                <td>
-                    <a asp-action="ByArtist" asp-controller="Album" asp-route-id="@item.Id" class="btn btn-info"
-                       data-toggle="tooltip" data-placement="top" title="Listado de álbumes de @item.Name"><i class="fas fa-compact-disc"></i></a>
+                    <p>
+                        <a asp-action="Create" class="btn btn-info"><i class="fas fa-user-plus"></i>&nbsp; Agregar nuevo artista</a>
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                @*<th>
+                        @Html.DisplayNameFor(model => model.Biography)
+                    </th>*@
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Country)
+                                </th>
+                                <th>Álbumes</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                flag = "https://flagcdn.com/h24/" + item.Country.ISO2.ToLower() + ".png";
+                                flag2x = "https://flagcdn.com/h48/" + item.Country.ISO2.ToLower() + ".png";
+                                flag3x = "https://flagcdn.com/96x72/" + item.Country.ISO2.ToLower() + ".png";
 
-                </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Biography)
+                        </td>*@
+                                    <td>
+                                        @* @Html.DisplayFor(modelItem => item.Country.NameEs)*@
+                                        <img src=@flag srcset="@flag2x 2x"
+                                             height="24"
+                                             alt="@item.Country.NameEn"
+                                             data-toggle="tooltip" data-placement="top" title="@item.Country.NameEs">
+                                    </td>
 
-                <td>
+                                    <td>
+                                        <a asp-action="ByArtist" asp-controller="Album" asp-route-id="@item.Id" class="btn btn-info"
+                                           data-toggle="tooltip" data-placement="top" title="Listado de álbumes de @item.Name"><i class="fas fa-compact-disc"></i></a>
 
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"
-                           data-toggle="tooltip" data-placement="top" title="Detalles de artista"><i class="fas fa-users"></i></a>
+                                    </td>
 
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"
-                           data-toggle="tooltip" data-placement="top" title="Edición de artista"><i class="fas fa-edit"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
-                           data-toggle="tooltip" data-placement="top" title="Borrar artista"><i class="fas fa-trash-alt"></i></a>
-                    </div>
+                                    <td>
 
-                </td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"
+                                               data-toggle="tooltip" data-placement="top" title="Detalles de artista"><i class="fas fa-users"></i></a>
 
-            </tr>
-        }
-    </tbody>
-</table>
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"
+                                               data-toggle="tooltip" data-placement="top" title="Edición de artista"><i class="fas fa-edit"></i></a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
+                                               data-toggle="tooltip" data-placement="top" title="Borrar artista"><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

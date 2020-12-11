@@ -83,20 +83,18 @@ namespace SoundBeatsV2.Web.Controllers
             //if (ModelState.IsValid)
             if (ModelState.IsValid && Image != null)
             {
-                // full path to file in temp location
-                var filePath = Path.GetTempFileName();
-                foreach (var formFile in Image)
-                {
-                    if (formFile.Length > 0)
-                    {
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await formFile.CopyToAsync(stream);
-                        }
-                    }
-                }
-
-
+                //// full path to file in temp location
+                //var filePath = Path.GetTempFileName();
+                //foreach (var formFile in Image)
+                //{
+                //    if (formFile.Length > 0)
+                //    {
+                //        using (var stream = new FileStream(filePath, FileMode.Create))
+                //        {
+                //            await formFile.CopyToAsync(stream);
+                //        }
+                //    }
+                //}
                 //album.PhotoCover = new byte[Image.ContentLength];
                 //album.ImageType = Image.ContentType;
                 //Image.InputStream.Read(album.PhotoCover, 0, Image.ContentLength);
