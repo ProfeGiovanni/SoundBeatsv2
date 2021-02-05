@@ -5,8 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.WebEncoders;
 using SoundBeatsV2.Infrastructure.Data;
 using SoundBeatsV2.Infrastructure.Identity;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace SoundBeatsV2.Web
 {
@@ -45,6 +48,11 @@ namespace SoundBeatsV2.Web
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
             services.AddRazorPages();
+
+            services.Configure<WebEncoderOptions>(options =>
+            {
+                options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
