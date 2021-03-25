@@ -102,7 +102,9 @@ namespace SoundBeatsV2.Web.Controllers
 
                 _context.Add(album);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ByArtist", "Album", new { id = album.ArtistId });
+                 
+                    //RedirectToAction(nameof(Index));
             }
             ViewData["ArtistId"] = new SelectList(_context.Artist, "Id", "Name", album.ArtistId);
             return View(album);
