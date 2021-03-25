@@ -36,7 +36,7 @@ namespace SoundBeatsV2.Web.Controllers
 
             ViewData["ArtistName"] = _context.Artist.Where(x => x.Id == id).FirstOrDefault().Name;
             ViewData["ArtistBiography"] = _context.Artist.Where(x => x.Id == id).FirstOrDefault().Biography;
-
+            ViewData["ArtistId"] = id;
             return View(listAlbum);
         }
 
@@ -66,10 +66,11 @@ namespace SoundBeatsV2.Web.Controllers
 
         //[Authorize(Roles = "Administrator")]
         // GET: Album/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["ArtistId"] = new SelectList(_context.Artist, "Id", "Name");
-            return View();
+            ViewData["ArtistName"] = _context.Artist.Where(x => x.Id == id).FirstOrDefault().Name;
+            Album album = new Album { ArtistId = id };
+            return View(album);
         }
 
         // POST: Album/Create
@@ -77,7 +78,7 @@ namespace SoundBeatsV2.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Year,PhotoCover,ImageType,ArtistId")] Album album, 
+        public async Task<IActionResult> Create([Bind("Title,Year,PhotoCover,ImageType,ArtistId")] Album album, 
             List<IFormFile> Image)
         {
             //if (ModelState.IsValid)
